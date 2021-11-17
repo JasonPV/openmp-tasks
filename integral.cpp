@@ -31,7 +31,6 @@ double test_reduction(double a, double b, int N){
 		
 		res = 0.0;
 		double start_time = omp_get_wtime();
-		omp_set_num_threads(num_threads);
 		#pragma parallel for reduction(+:res)
 		for(int i = 0; i < N; i++)
       			res += f(a + i*h)*h;
