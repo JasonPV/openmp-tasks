@@ -106,6 +106,7 @@ for (int i = 2; i <= 16; i *= 2)
 	time = omp_get_wtime() - start_time;
 	cout << "result with omp: " << result << endl;
 	cout << "time: " << time << endl;
+}
 
 //test_reduction(a, b, N);
 return 0;
