@@ -24,17 +24,16 @@ int get_max(int** array, int n, int  m, int Parallel){
         int mx;
         int* min_of_lines = new int [n];
         omp_set_num_threads(Parallel);
-        #pragma omp parallel if(Parallel)
-        {
-                #pragma omp for
-                for (int i = 0; i < n; i++)
-                        min_of_lines[i] = get_min(array[i], m);
-                mx = min_of_lines[0];
-                #pragma omp for reduction(max:mx)
-                for (int i = 1; i < n; i++)
-                        if (min_of_lines[i] > mx)
-                                mx = min_of_lines[i];
-        }
+
+        #pragma omp parallel for
+        for (int i = 0; i < n; i++)
+                min_of_lines[i] = get_min(array[i], m);
+        mx = min_of_lines[0];
+        #pragma omp parallel for reduction(max:mx)
+        for (int i = 1; i < n; i++)
+                if (min_of_lines[i] > mx)
+                        mx = min_of_lines[i];
+
         return mx;
 }
 
