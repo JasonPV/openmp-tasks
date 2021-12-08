@@ -6,18 +6,18 @@ using namespace std;
 int get_max(long long* array, long long n , int Parallel, int num_threads=1){	
 	int mx;
 	if (Parallel == 1)
+	{
+		mx = array[0];
+		omp_set_num_threads(num_threads);
+		#pragma omp parallel for
+		for (int i = 1; i < n; i++)
 		{
-			mx = array[0];
-			omp_set_num_threads(num_threads);
-			#pragma omp parallel for
-			for (int i = 1; i < n; i++)
-			{
+			if (array[i] > mx)
+				#pragma omp critical
 				if (array[i] > mx)
-					#pragma omp critical
-					if (array[i] > mx)
-						mx = array[i];
-			}
+					mx = array[i];
 		}
+	}
 	if (Parallel == 2)
 	{			
 		mx = array[0];
