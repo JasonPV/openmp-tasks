@@ -23,7 +23,7 @@ int get_max(long long* array, long long n , int Parallel, int num_threads=1){
 		mx = array[0];
 		omp_set_num_threads(num_threads);
 		#pragma omp parallel for reduction(max:mx)	
-		for (int i = 1; i < num_threads; i++)
+		for (int i = 1; i < n; i++)
 			if (array[i] > mx)
 				mx = array[i];
 
