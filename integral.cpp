@@ -14,7 +14,7 @@ double integral(double a, double b, int N, bool Parallel, int num_threads = 1){
 double res = 0.0;
 double h = (b-a)/N;
 	omp_set_num_threads(num_threads);
-	#pragma parallel for reduction(+:res) if(Parallel)
+	#pragma omp parallel for reduction(+:res) if(Parallel)
 	for(int i = 0; i < N; i++)
 	      res += f(a + i*h)*h;
 	
@@ -31,7 +31,7 @@ double test_reduction(double a, double b, int N){
 		
 		res = 0.0;
 		double start_time = omp_get_wtime();
-		#pragma parallel for reduction(+:res)
+		#pragma omp parallel for reduction(+:res)
 		for(int i = 0; i < N; i++)
       			res += f(a + i*h)*h;
 		double end_time = omp_get_wtime() - start_time;
