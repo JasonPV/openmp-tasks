@@ -9,12 +9,12 @@ int get_min(int* line, int m, int Parallel=false)
 {
         if (Parallel)
                 omp_set_nested(true);
-        int min = line[0];
-        #pragma parallel for if(Parallel)
+        int mn = line[0];
+        #pragma parallel for reduction(min:mn) if(Parallel)
         for (int i = 0; i < m; i++)
         {
-                if (line[i] < min)
-                        min = line[i];
+                if (line[i] < mn)
+                        mn = line[i];
         }
         return min;
 }
